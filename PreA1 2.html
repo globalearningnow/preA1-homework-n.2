@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-A1 · Prepara la Unidad 2 · ¿De dónde eres?</title>
+<style>
+  :root{
+    --green-dark:#1B6B49; --green:#1B8A5A; --green-mid:#2A9466; --green-bright:#2BA36F; --green-pale:#BDE8CE;
+    --mint:#DCF6E7; --bg:#F0FBF4; --text:#1F2A25; --muted:#5E6F66;
+    --ok:#2BA36F; --bad:#C4622D; --white:#FFFFFF; --card-border:#C8F0D8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Calibri,"Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.45}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 40px}
+  header{background:var(--green-dark);color:var(--white);padding:28px 16px 24px;text-align:center}
+  .eyebrow{display:inline-block;background:var(--green-bright);color:var(--white);font-size:12px;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:20px;text-transform:uppercase}
+  h1{font-family:Cambria,Georgia,serif;font-size:34px;margin:12px 0 6px}
+  .sub{margin:0;opacity:.92}
+  .progress{max-width:860px;margin:18px auto 0;padding:0 16px}
+  .bar{height:10px;background:var(--green-pale);border-radius:6px;overflow:hidden}
+  .bar span{display:block;height:100%;width:0;background:var(--green-bright);transition:width .4s}
+  .ptext{font-size:14px;color:var(--muted);text-align:right;margin-top:4px}
+  .warn{display:none;gap:10px;align-items:center;border:1px solid var(--bad);color:#7a3418;background:#FBEDE5;border-radius:12px;padding:10px 14px;margin-top:16px;font-size:14px}
+  .ico{width:22px;height:22px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .task{background:var(--white);border:1px solid var(--card-border);border-radius:16px;padding:22px 20px;margin-top:22px;box-shadow:0 2px 6px rgba(27,107,73,.07)}
+  .task h2{font-family:Cambria,Georgia,serif;color:var(--green-dark);font-size:24px;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--green-dark);color:#fff;font-size:17px;font-family:Calibri,Arial,sans-serif;font-weight:700;flex-shrink:0}
+  .tag{display:inline-block;background:var(--mint);color:var(--green-dark);font-size:13px;font-weight:700;padding:3px 12px;border-radius:14px;margin-bottom:10px}
+  .inst{margin:4px 0 2px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .inst .ico{color:var(--green)}
+  .en{margin:0 0 14px;font-size:14px;color:var(--muted);font-style:italic}
+  .play{border:none;background:var(--green);color:#fff;border-radius:24px;padding:8px 16px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .play .ico{width:18px;height:18px}
+  .play:hover{background:var(--green-dark)}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 0;border-top:1px dashed var(--card-border)}
+  .row:first-child{border-top:none}
+  .rlabel{font-weight:700;color:var(--green-dark);min-width:24px}
+  .mark{font-weight:700;font-size:20px;min-width:24px}
+  .row.ok .mark{color:var(--ok)} .row.bad .mark{color:var(--bad)}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  .check{border:none;background:var(--green-dark);color:#fff;border-radius:10px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer}
+  .check:hover{background:var(--green)}
+  .score{font-weight:700;color:var(--green-dark)}
+
+  /* Tarea 1: emparejar */
+  .pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+  .col{display:flex;flex-direction:column;gap:8px}
+  .colhead{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+  .pitem{position:relative;border:2px solid var(--green-pale);background:#fff;border-radius:12px;padding:9px 12px 9px 44px;cursor:pointer;font-size:17px;text-align:left;color:var(--text);min-height:44px}
+  .pitem:hover{border-color:var(--green-mid)}
+  .pitem.sel{border-color:var(--green-dark);background:var(--mint)}
+  .pitem .badge{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;border:2px dashed var(--green-pale);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff}
+  .pitem.paired .badge{border:none}
+  .pitem.ok{border-color:var(--ok);background:#E3F6EB}
+  .pitem.bad{border-color:var(--bad);background:#FBEDE5}
+  .country{font-family:Cambria,Georgia,serif;font-weight:700}
+  .nat{font-size:16px}
+
+  /* Tarea 2: escribir número */
+  .numin{width:90px;font-size:22px;font-family:Cambria,Georgia,serif;font-weight:700;text-align:center;border:2px solid var(--green-pale);border-radius:10px;padding:6px;color:var(--green-dark)}
+  .numin:focus{outline:none;border-color:var(--green-mid)}
+  .row.ok .numin{border-color:var(--ok);background:#E3F6EB}
+  .row.bad .numin{border-color:var(--bad);background:#FBEDE5}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;column-gap:24px}
+  .grid2 .row:nth-child(2){border-top:none}
+
+  /* Tarea 3: ordenar */
+  .seq{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:10px;border:2px dashed var(--green-pale);border-radius:12px;background:var(--bg);margin-bottom:12px;align-items:center}
+  .seq .ph{color:var(--muted);font-size:14px}
+  .wtile{border:none;background:var(--green-dark);color:#fff;border-radius:12px;padding:9px 16px;font-size:18px;font-family:Cambria,Georgia,serif;font-weight:700;cursor:pointer}
+  .wtile:disabled{opacity:.25;cursor:default}
+  .seq .wtile{background:#fff;color:var(--green-dark);border:2px solid var(--green-mid)}
+  .seq .wtile .pos{font-family:Calibri,Arial,sans-serif;font-size:12px;color:var(--muted);margin-right:6px}
+  .seq .wtile.ok{border-color:var(--ok);background:#E3F6EB}
+  .seq .wtile.bad{border-color:var(--bad);background:#FBEDE5}
+  .pool{display:flex;flex-wrap:wrap;gap:8px}
+  .scale{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:-4px 2px 8px}
+
+  /* Tarea 4: teléfonos */
+  .contact{display:flex;align-items:center;gap:10px;min-width:150px}
+  .avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+  .avatar .ico{width:24px;height:24px}
+  .cname{font-weight:700;color:var(--green-dark)}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .phone{border:2px solid var(--green-pale);background:#fff;border-radius:12px;padding:7px 12px;font-size:17px;cursor:pointer;color:var(--text);display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .phone .ico{width:16px;height:16px;color:var(--green-mid)}
+  .phone:hover{border-color:var(--green-mid)}
+  .phone.sel{border-color:var(--green-dark);background:var(--mint);font-weight:700}
+  .row.ok .phone.sel{border-color:var(--ok);box-shadow:0 0 0 2px var(--ok)}
+  .row.bad .phone.sel{border-color:var(--bad);box-shadow:0 0 0 2px var(--bad)}
+
+  .final{background:var(--green-dark);color:#fff;border-radius:16px;padding:22px;margin-top:26px;text-align:center}
+  .final .big{font-family:Cambria,Georgia,serif;font-size:30px;margin:6px 0}
+  .final button{background:#fff;color:var(--green-dark);border:none;border-radius:10px;padding:9px 20px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px}
+  footer{text-align:center;color:var(--muted);margin-top:26px;font-family:Cambria,Georgia,serif;font-size:18px}
+  @media (max-width:600px){h1{font-size:27px}.pairs{gap:8px 10px}.pitem{padding-left:40px;font-size:15px}.grid2{grid-template-columns:1fr}.grid2 .row:nth-child(2){border-top:1px dashed var(--card-border)}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3M4 15h3v5H5a1 1 0 0 1-1-1v-4zM20 15h-3v5h2a1 1 0 0 0 1-1v-4z"/></symbol>
+    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></symbol>
+    <symbol id="i-steps" viewBox="0 0 24 24"><path d="M4 19h5v-5h5V9h6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <span class="eyebrow">Pre-A1 · Español · Prepara la Unidad 2</span>
+  <h1>¿De dónde eres?</h1>
+  <p class="sub">Países, nacionalidades y números.</p>
+</header>
+<div class="progress"><div class="bar"><span id="bar"></span></div><div class="ptext" id="ptext">0 / 26</div></div>
+
+<div class="wrap">
+  <div class="warn" id="warn"><svg class="ico"><use href="#i-info"/></svg><span>Tu navegador no tiene voz en español. Abre esta página en Microsoft Edge o Google Chrome para escuchar el audio.</span></div>
+
+  <!-- TAREA 1 -->
+  <section class="task">
+    <h2><span class="num">1</span>Países y nacionalidades</h2>
+    <span class="tag">Vocabulario: países y nacionalidades</span>
+    <p class="inst"><svg class="ico"><use href="#i-link"/></svg>Une cada país con su nacionalidad.</p>
+    <p class="en">Tap a country, then tap its nationality. Tap again to undo a pair.</p>
+    <div class="pairs">
+      <div class="col" id="colA"><div class="colhead">País</div></div>
+      <div class="col" id="colB"><div class="colhead">Nacionalidad (él · ella)</div></div>
+    </div>
+    <div class="actions"><button class="check" data-task="1">Comprobar</button><span class="score" id="s1"></span></div>
+  </section>
+
+  <!-- TAREA 2 -->
+  <section class="task">
+    <h2><span class="num">2</span>Escucha el número</h2>
+    <span class="tag">Vocabulario: los números del 0 al 100</span>
+    <p class="inst"><svg class="ico"><use href="#i-headphones"/></svg>Escucha y escribe el número.</p>
+    <p class="en">Listen and write the number in figures (for example: 25).</p>
+    <div class="grid2" id="t2rows"></div>
+    <div class="actions"><button class="check" data-task="2">Comprobar</button><span class="score" id="s2"></span></div>
+  </section>
+
+  <!-- TAREA 3 -->
+  <section class="task">
+    <h2><span class="num">3</span>De menor a mayor</h2>
+    <span class="tag">Vocabulario: los números escritos</span>
+    <p class="inst"><svg class="ico"><use href="#i-steps"/></svg>Lee los números y ordénalos de menor a mayor.</p>
+    <p class="en">Read the numbers and tap them in order, from the smallest to the biggest. Tap a number in the box to remove it.</p>
+    <div class="scale"><span>menor</span><span>mayor</span></div>
+    <div class="seq" id="seq"><span class="ph">Toca los números…</span></div>
+    <div class="pool" id="pool"></div>
+    <div class="actions"><button class="check" data-task="3">Comprobar</button><span class="score" id="s3"></span></div>
+  </section>
+
+  <!-- TAREA 4 -->
+  <section class="task">
+    <h2><span class="num">4</span>¿Cuál es su teléfono?</h2>
+    <span class="tag">Escuchar: de dónde son y su teléfono</span>
+    <p class="inst"><svg class="ico"><use href="#i-headphones"/></svg>Escucha a cada persona y elige su número de teléfono.</p>
+    <p class="en">Listen to each person and choose their phone number.</p>
+    <div id="t4rows"></div>
+    <div class="actions"><button class="check" data-task="4">Comprobar</button><span class="score" id="s4"></span></div>
+  </section>
+
+  <div class="final">
+    <div>Tu puntuación total</div>
+    <div class="big" id="total">0 / 26</div>
+    <div id="msg">Haz las cuatro tareas y pulsa «Comprobar».</div>
+    <button id="reset">Empezar otra vez</button>
+  </div>
+
+  <footer>¡Nos vemos en clase! — Fernanda.</footer>
+</div>
+
+<script>
+(function(){
+  const icon = (id) => '<svg class="ico"><use href="#'+id+'"/></svg>';
+  const el = (tag, cls, txt) => { const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; };
+  function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+  /* ---------- VOZ (automática: mujer / hombre) ---------- */
+  const synth = window.speechSynthesis;
+  let vF = null, vM = null, fakeMale = false;
+  const FEMALE = /\b(elvira|luc[ií]a|helena|laura|m[oó]nica|paulina|marisol|abril|esperanza|ximena|triana|irene|estrella|dalia|elena|sof[ií]a|camila|catalina|salom[eé]|valentina|beatriz|candela|carlota|nuria|larissa|lola|marta|mar[ií]a|renata|yolanda|karina|andrea|tania|nora|carla|google español|female|mujer)\b/i;
+  const MALE = /\b([aá]lvaro|jorge|pablo|diego|ra[uú]l|enrique|arnau|dar[ií]o|tom[aá]s|juan|carlos|gonzalo|manuel|alonso|andr[eé]s|gerardo|lorenzo|cristian|federico|emilio|sa[uú]l|el[ií]as|alex|mateo|pedro|rodrigo|roberto|javier|luis|marcelo|mario|sergio|v[ií]ctor|yago|rafael|jos[eé]|nil|teo|luciano|alberto|francisco|miguel|antonio|male|hombre)\b/i;
+  function quality(v){
+    let q = 0;
+    if(/natural|neural|online/i.test(v.name)) q += 100;
+    if(/premium|enhanced|mejorada/i.test(v.name)) q += 80;
+    if(/google/i.test(v.name)) q += 60;
+    if(/^es[-_]ES/i.test(v.lang)) q += 30;
+    if(!v.localService) q += 5;
+    return q;
+  }
+  function loadVoices(){
+    if(!synth) return;
+    const all = synth.getVoices();
+    const es = all.filter(v => /^es/i.test(v.lang)).sort((a,b)=>quality(b)-quality(a));
+    const mal = es.filter(v => MALE.test(v.name) && !/female/i.test(v.name));
+    let fem = es.filter(v => FEMALE.test(v.name) && !mal.includes(v));
+    if(!fem.length) fem = es.filter(v => !mal.includes(v));
+    vF = fem[0] || es[0] || null;
+    vM = mal[0] || vF;
+    fakeMale = !mal.length;
+    document.getElementById('warn').style.display = (all.length && !es.length) ? 'flex' : 'none';
+  }
+  if(!synth){ document.getElementById('warn').style.display='flex'; }
+  else { loadVoices(); synth.onvoiceschanged = loadVoices; }
+
+  let curBtn = null, token = 0, st = null;
+  function setBtn(b, state){
+    if(!b) return;
+    b.dataset.state = state;
+    b.innerHTML = (state==='playing' ? icon('i-pause')+'Pausa' : state==='paused' ? icon('i-play')+'Seguir' : icon('i-speaker')+b.dataset.label);
+  }
+  function finish(my){ if(my !== token) return; setBtn(curBtn,'idle'); curBtn = null; st = null; }
+  function next(my){
+    if(!st || my !== token) return;
+    if(st.idx >= st.lines.length){ finish(my); return; }
+    const l = st.lines[st.idx];
+    const u = new SpeechSynthesisUtterance(l.t);
+    u.rate = l.r || 0.92; u.pitch = 1;
+    const v = l.v === 'M' ? vM : vF;
+    if(v){ u.voice = v; u.lang = v.lang; } else { u.lang = 'es-ES'; }
+    if(l.v === 'M' && fakeMale) u.pitch = 0.8;
+    u.onend = () => {
+      if(!st || my !== token) return;
+      st.idx++;
+      if(st.paused) return;
+      st.timer = setTimeout(()=>next(my), st.lines.length > 1 ? 350 : 0);
+    };
+    synth.speak(u);
+  }
+  function say(lines, btn){
+    if(!synth) return;
+    if(btn && btn === curBtn && st){
+      if(btn.dataset.state === 'playing'){ st.paused = true; clearTimeout(st.timer); if(synth.speaking) synth.pause(); setBtn(btn,'paused'); return; }
+      if(btn.dataset.state === 'paused'){ st.paused = false; setBtn(btn,'playing'); if(synth.paused) synth.resume(); else next(token); return; }
+    }
+    synth.cancel(); if(st) clearTimeout(st.timer);
+    setBtn(curBtn,'idle');
+    const my = ++token; curBtn = btn || null; setBtn(curBtn,'playing');
+    st = {lines, idx:0, paused:false, timer:null};
+    next(my);
+  }
+  const playBtn = (label) => { const b = el('button','play'); b.dataset.label = label; setBtn(b,'idle'); return b; };
+
+  /* ---------- PUNTUACIÓN ---------- */
+  const scores = {1:0,2:0,3:0,4:0};
+  const TOTAL = 26;
+  function updateTotal(){
+    const s = scores[1]+scores[2]+scores[3]+scores[4];
+    document.getElementById('total').textContent = s+' / '+TOTAL;
+    document.getElementById('ptext').textContent = s+' / '+TOTAL;
+    document.getElementById('bar').style.width = (s/TOTAL*100)+'%';
+    document.getElementById('msg').textContent =
+      s===TOTAL ? '¡Perfecto! Ya estás preparado/a para la Unidad 2.' :
+      s>=19 ? '¡Muy bien! Repasa los errores y vuelve a comprobar.' :
+      s>0 ? '¡Buen comienzo! Escucha otra vez y repite las tareas.' : 'Haz las cuatro tareas y pulsa «Comprobar».';
+  }
+
+  /* ---------- TAREA 1: emparejar país y nacionalidad ---------- */
+  const PAIRS = [
+    ['Italia','italiano · italiana'],
+    ['México','mexicano · mexicana'],
+    ['Brasil','brasileño · brasileña'],
+    ['Alemania','alemán · alemana'],
+    ['Argentina','argentino · argentina'],
+    ['Francia','francés · francesa'],
+    ['Japón','japonés · japonesa'],
+    ['Colombia','colombiano · colombiana']
+  ];
+  const PCOL = ['#1B6B49','#2BA36F','#C4622D','#3A6B8C','#8C5A9E','#B08A1E','#5E6F66','#1B8A5A'];
+  const colA = document.getElementById('colA'), colB = document.getElementById('colB');
+  const left = [], right = [];
+  let pickA = null, pickB = null;
+  const links = new Map(); // leftEl -> rightEl
+  function mk(text, cls, key){
+    const b = el('button','pitem'); b.dataset.key = key;
+    b.appendChild(el('span','badge'));
+    b.appendChild(el('span',cls,text));
+    return b;
+  }
+  function freeColor(){ const used = new Set([...links.keys()].map(a=>a.dataset.color)); return PCOL.find(c=>!used.has(c)); }
+  function clearMarks(){ [...left,...right].forEach(x=>x.classList.remove('ok','bad')); }
+  function unlink(a){
+    const b = links.get(a); links.delete(a);
+    [a,b].forEach(x=>{ x.classList.remove('paired'); x.querySelector('.badge').style.background=''; x.querySelector('.badge').textContent=''; });
+    delete a.dataset.color;
+  }
+  function relabel(){ let n=1; left.forEach(a=>{ if(links.has(a)){ a.querySelector('.badge').textContent=n; links.get(a).querySelector('.badge').textContent=n; n++; } }); }
+  function tryLink(){
+    if(!pickA || !pickB) return;
+    const c = freeColor(); pickA.dataset.color = c;
+    links.set(pickA, pickB);
+    [pickA,pickB].forEach(x=>{ x.classList.add('paired'); x.classList.remove('sel'); x.querySelector('.badge').style.background=c; });
+    pickA = pickB = null; relabel();
+  }
+  PAIRS.forEach((p,i)=>{
+    const a = mk(p[0],'country',i);
+    a.addEventListener('click',()=>{
+      clearMarks();
+      if(links.has(a)){ unlink(a); relabel(); return; }
+      left.forEach(x=>x.classList.remove('sel')); pickA = a; a.classList.add('sel'); tryLink();
+    });
+    left.push(a); colA.appendChild(a);
+  });
+  shuffle(PAIRS.map((p,i)=>[p[1],i])).forEach(([t,i])=>{
+    const b = mk(t,'nat',i);
+    b.addEventListener('click',()=>{
+      clearMarks();
+      const owner = [...links.entries()].find(e=>e[1]===b);
+      if(owner){ unlink(owner[0]); relabel(); return; }
+      right.forEach(x=>x.classList.remove('sel')); pickB = b; b.classList.add('sel'); tryLink();
+    });
+    right.push(b); colB.appendChild(b);
+  });
+
+  /* ---------- TAREA 2: escuchar y escribir el número ---------- */
+  const T2 = [
+    {n:13, w:'trece', v:'F'}, {n:30, w:'treinta', v:'M'},
+    {n:15, w:'quince', v:'F'}, {n:50, w:'cincuenta', v:'M'},
+    {n:60, w:'sesenta', v:'F'}, {n:70, w:'setenta', v:'M'},
+    {n:16, w:'dieciséis', v:'F'}, {n:100, w:'cien', v:'M'}
+  ];
+  const t2rows = document.getElementById('t2rows');
+  T2.forEach((it,i)=>{
+    const r = el('div','row'); r.dataset.ans = it.n;
+    r.appendChild(el('span','rlabel',(i+1)+'.'));
+    const b = playBtn('Escucha'); b.addEventListener('click',()=>say([{t:it.w, v:it.v}], b)); r.appendChild(b);
+    const inp = el('input','numin'); inp.type='text'; inp.inputMode='numeric'; inp.maxLength=3; inp.setAttribute('aria-label','Número '+(i+1));
+    inp.addEventListener('input',()=>{ inp.value = inp.value.replace(/\D/g,''); r.classList.remove('ok','bad'); r.querySelector('.mark').textContent=''; });
+    r.appendChild(inp); r.appendChild(el('span','mark'));
+    t2rows.appendChild(r);
+  });
+
+  /* ---------- TAREA 3: ordenar de menor a mayor ---------- */
+  const T3 = [['cuatro',4],['doce',12],['diecinueve',19],['treinta',30],['sesenta',60],['cien',100]];
+  const seq = document.getElementById('seq'), pool = document.getElementById('pool');
+  const placed = [];
+  function renderSeq(){
+    seq.innerHTML = '';
+    if(!placed.length){ seq.appendChild(el('span','ph','Toca los números…')); return; }
+    placed.forEach((p,i)=>{
+      const t = el('button','wtile'); t.innerHTML = '<span class="pos">'+(i+1)+'</span>'+p.w;
+      t.addEventListener('click',()=>{ placed.splice(i,1); p.src.disabled=false; renderSeq(); });
+      seq.appendChild(t);
+    });
+  }
+  shuffle(T3).forEach(([w,n])=>{
+    const t = el('button','wtile',w);
+    t.addEventListener('click',()=>{ placed.push({w,n,src:t}); t.disabled=true; renderSeq(); });
+    pool.appendChild(t);
+  });
+
+  /* ---------- TAREA 4: teléfonos ---------- */
+  const T4 = [
+    {name:'Sofía', v:'F', c:'#2BA36F',
+     audio:'Hola, me llamo Sofía. Soy de Argentina. Mi número es: seis, uno, dos... treinta y cuatro... cincuenta y seis... setenta y ocho.',
+     a:'612 34 56 78', o:['612 34 56 78','612 34 65 78','612 43 56 78']},
+    {name:'Kenji', v:'M', c:'#1B6B49',
+     audio:'Hola, soy Kenji. Soy de Japón. Mi número es: seis, cinco, cinco... trece... treinta... noventa.',
+     a:'655 13 30 90', o:['655 13 30 90','655 30 13 90','655 13 13 90']},
+    {name:'Julia', v:'F', c:'#1B8A5A',
+     audio:'Buenos días. Me llamo Julia y soy de Alemania. Mi número es: seis, siete, siete... sesenta... diecisiete... catorce.',
+     a:'677 60 17 14', o:['677 70 17 14','677 60 17 14','677 60 16 14']},
+    {name:'Tomás', v:'M', c:'#5E6F66',
+     audio:'Hola, me llamo Tomás. Soy de Chile. Mi número es: seis, cuatro, cuatro... veinticinco... cero, ocho... once.',
+     a:'644 25 08 11', o:['644 25 80 11','644 52 08 11','644 25 08 11']}
+  ];
+  const t4rows = document.getElementById('t4rows');
+  T4.forEach((it,i)=>{
+    const r = el('div','row'); r.dataset.ans = it.a;
+    r.appendChild(el('span','rlabel',(i+1)+'.'));
+    const c = el('div','contact');
+    const av = el('span','avatar'); av.style.background = it.c; av.innerHTML = icon('i-person'); c.appendChild(av);
+    c.appendChild(el('span','cname',it.name));
+    r.appendChild(c);
+    const b = playBtn('Escucha'); b.addEventListener('click',()=>say([{t:it.audio, v:it.v}], b)); r.appendChild(b);
+    const o = el('div','opts');
+    shuffle(it.o).forEach(ph=>{
+      const btn = el('button','phone'); btn.dataset.v = ph; btn.innerHTML = icon('i-phone') + ph;
+      btn.addEventListener('click',()=>{ o.querySelectorAll('.phone').forEach(x=>x.classList.remove('sel')); btn.classList.add('sel'); r.classList.remove('ok','bad'); r.querySelector('.mark').textContent=''; });
+      o.appendChild(btn);
+    });
+    r.appendChild(o); r.appendChild(el('span','mark'));
+    t4rows.appendChild(r);
+  });
+
+  /* ---------- COMPROBAR ---------- */
+  document.querySelectorAll('.check').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const t = btn.dataset.task; let n=0, max=0;
+      if(t==='1'){
+        max = PAIRS.length; clearMarks();
+        left.forEach(a=>{
+          const b = links.get(a);
+          const ok = b && b.dataset.key === a.dataset.key;
+          a.classList.add(ok?'ok':'bad'); if(b) b.classList.add(ok?'ok':'bad');
+          if(ok) n++;
+        });
+      }
+      if(t==='2'){
+        max = T2.length;
+        t2rows.querySelectorAll('.row').forEach(r=>{
+          const ok = r.querySelector('.numin').value === String(r.dataset.ans);
+          r.classList.remove('ok','bad'); r.classList.add(ok?'ok':'bad');
+          r.querySelector('.mark').textContent = ok?'✓':'✗'; if(ok) n++;
+        });
+      }
+      if(t==='3'){
+        max = T3.length;
+        const sorted = T3.map(x=>x[1]).sort((a,b)=>a-b);
+        seq.querySelectorAll('.wtile').forEach((tile,i)=>{
+          const ok = placed[i].n === sorted[i];
+          tile.classList.add(ok?'ok':'bad'); if(ok) n++;
+        });
+      }
+      if(t==='4'){
+        max = T4.length;
+        t4rows.querySelectorAll('.row').forEach(r=>{
+          const sel = r.querySelector('.phone.sel');
+          const ok = sel && sel.dataset.v === r.dataset.ans;
+          r.classList.remove('ok','bad'); r.classList.add(ok?'ok':'bad');
+          r.querySelector('.mark').textContent = ok?'✓':'✗'; if(ok) n++;
+        });
+      }
+      scores[t]=n;
+      document.getElementById('s'+t).textContent = n+' / '+max;
+      updateTotal();
+    });
+  });
+  document.getElementById('reset').addEventListener('click',()=>location.reload());
+})();
+</script>
+</body>
+</html>
